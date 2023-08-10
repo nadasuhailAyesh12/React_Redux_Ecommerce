@@ -1,8 +1,10 @@
+import React from "react";
 import { useDispatch } from "react-redux";
 
 import "./style.css";
 import StarRating from "../StarRating";
 import { addToCart } from "../../../actions/cartActions";
+
 
 const ProductItem = ({ product }) => {
   const dispatch = useDispatch();
