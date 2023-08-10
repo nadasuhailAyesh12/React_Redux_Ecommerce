@@ -6,12 +6,13 @@ import { BrowserRouter } from "react-router-dom";
 
 import store, { persistor } from "./store";
 import App from "./App.jsx";
+import Loader from "./components/Common/loader";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <BrowserRouter>
       <Provider store={store}>
-        <PersistGate loading={null} persistor={persistor}>
+        <PersistGate loading={<Loader/>} persistor={persistor}>
           <App />
         </PersistGate>
       </Provider>

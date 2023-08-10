@@ -29,7 +29,7 @@ import whiteDress from "../assets/whiteDress.png";
 import grayPants from "../assets/grayPants.png";
 import leatherShirt from "../assets/jellShirt.png";
 import yellowHat from "../assets/yellowHat.png";
-import yellowBag from "../assets/yellowHat.png";
+import yellowBag from "../assets/yellowBag.png";
 import whiteSkirt from "../assets/whiteSkirt.png";
 import whiteNecklace from "../assets/whiteNecklace.png";
 import whiteBag from "../assets/whiteBag.png";

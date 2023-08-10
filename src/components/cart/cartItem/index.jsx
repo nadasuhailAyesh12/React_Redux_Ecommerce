@@ -1,9 +1,9 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 import Swal from "sweetalert2";
-
 import { deleteFromCart, updateQuantity } from "../../../actions/cartActions";
 import "./style.css";
+import { toast } from "react-toastify";
 
 const CartItem = ({ item }) => {
   const dispatch = useDispatch();
@@ -20,7 +20,7 @@ const CartItem = ({ item }) => {
     }).then((result) => {
       if (result.isConfirmed) {
         dispatch(deleteFromCart(item));
-        Swal.fire("Deleted!", "Your item has been deleted.", "success");
+        toast.success("item deleted sucessfuly");
       }
     });
   };
