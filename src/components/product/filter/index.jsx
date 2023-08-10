@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import "./style.css";
 import {
+  setCurrentPage,
   setFilterOption,
   updateFilteredProducts,
 } from "../../../actions/productActions";
@@ -13,6 +14,7 @@ const Filter = () => {
 
   const handleOptionChange = (event) => {
     dispatch(setFilterOption(event.target.value));
+    dispatch(setCurrentPage(1));
     dispatch(updateFilteredProducts());
   };
 

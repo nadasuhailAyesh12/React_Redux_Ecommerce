@@ -12,10 +12,13 @@ const Pagination = () => {
     (state) => state.products.filteredProducts
   );
   const selectedFilter = useSelector((state) => state.products.selectedFilter);
+  const searchQuery = useSelector((state) => state.products.searchQuery);
   const dispatch = useDispatch();
 
   const totalPages =
-    selectedFilter === "all" ? 6 : Math.ceil(filteredProducts.length / 7);
+    selectedFilter === "all" && !searchQuery
+      ? 6
+      : Math.ceil(filteredProducts.length / 7);
   const pageNumbers = Array.from(
     { length: totalPages },
     (_, index) => index + 1
