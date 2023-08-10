@@ -8,23 +8,34 @@ import {
 
 const Pagination = () => {
   const currentPage = useSelector((state) => state.products.currentPage);
+  const filteredProducts = useSelector(
+    (state) => state.products.filteredProducts
+  );
+  const selectedFilter = useSelector((state) => state.products.selectedFilter);
   const dispatch = useDispatch();
+
+  const totalPages =
+    selectedFilter === "all" ? 6 : Math.ceil(filteredProducts.length / 7);
+  const pageNumbers = Array.from(
+    { length: totalPages },
+    (_, index) => index + 1
+  );
 
   const handlePreviousPage = (e) => {
     e.preventDefault();
-    dispatch(setCurrentPage(currentPage - 1));
+    dispatch(setCurrentPage(Math.max(currentPage - 1), 1));
     dispatch(updateFilteredProducts());
   };
 
   const handleNextPage = (e) => {
     e.preventDefault();
-    dispatch(setCurrentPage(Math.min(currentPage + 1, 6)));
+    dispatch(setCurrentPage(Math.min(currentPage + 1, totalPages)));
     dispatch(updateFilteredProducts());
   };
 
-  const handleClickedPage = (e) => {
+  const handleClickedPage = (e, pageNumber) => {
     e.preventDefault();
-    dispatch(setCurrentPage(e.target.innerText));
+    dispatch(setCurrentPage(pageNumber));
     dispatch(updateFilteredProducts());
   };
 
@@ -36,39 +47,20 @@ const Pagination = () => {
             &laquo;
           </a>
         </li>
-        <li className={`page-item ${currentPage == 1 && "active"}`}>
-          <a className="page-link" href="#" onClick={handleClickedPage}>
-            1
-          </a>
-        </li>
-        <li
-          className={`page-item ${currentPage == 2 && "active"}`}
-          aria-current="page"
-        >
-          <a className="page-link" href="#" onClick={handleClickedPage}>
-            2
-          </a>
-        </li>
-        <li className={`page-item ${currentPage == 3 && "active"}`}>
-          <a className="page-link" href="#" onClick={handleClickedPage}>
-            3
-          </a>
-        </li>
-        <li className={`page-item ${currentPage == 4 && "active"}`}>
-          <a className="page-link" href="#" onClick={handleClickedPage}>
-            4
-          </a>
-        </li>
-        <li className={`page-item ${currentPage == 5 && "active"}`}>
-          <a className="page-link" href="#" onClick={handleClickedPage}>
-            5
-          </a>
-        </li>
-        <li className={`page-item ${currentPage == 6 && "active"}`}>
-          <a className="page-link" href="#" onClick={handleClickedPage}>
-            6
-          </a>
-        </li>
+        {pageNumbers.map((pageNumber) => (
+          <li
+            key={pageNumber}
+            className={`page-item ${currentPage === pageNumber && "active"}`}
+          >
+            <a
+              className="page-link"
+              href="#"
+              onClick={(e) => handleClickedPage(e, pageNumber)}
+            >
+              {pageNumber}
+            </a>
+          </li>
+        ))}
         <li className="page-item">
           <a className="page-link" onClick={handleNextPage} href="#">
             &raquo;

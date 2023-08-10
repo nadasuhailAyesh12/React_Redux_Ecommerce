@@ -1,11 +1,36 @@
 import React from "react";
 import { useDispatch } from "react-redux";
+import Swal from "sweetalert2";
 
 import { deleteFromCart, updateQuantity } from "../../../actions/cartActions";
 import "./style.css";
 
 const CartItem = ({ item }) => {
   const dispatch = useDispatch();
+
+  const handleDelete = () => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        dispatch(deleteFromCart(item));
+        Swal.fire("Deleted!", "Your item has been deleted.", "success");
+      }
+    });
+  };
+
+  const handleKeyDown = (e) => {
+    // Prevent manual input by preventing all keys except arrow keys
+    if (e.key !== "ArrowUp" && e.key !== "ArrowDown") {
+      e.preventDefault();
+    }
+  };
 
   return (
     <div className="product">
@@ -39,13 +64,14 @@ const CartItem = ({ item }) => {
                   onClick={(e) => {
                     dispatch(updateQuantity(item.id, e.target.value));
                   }}
+                  onKeyDown={handleKeyDown}
                 />
               </div>
               <div className="col-md-3 price">
                 <span>{item.price}</span>
                 <span
                   className="fa-sharp fa-solid fa-trash"
-                  onClick={() => dispatch(deleteFromCart(item))}
+                  onClick={handleDelete}
                 ></span>
               </div>
             </div>
